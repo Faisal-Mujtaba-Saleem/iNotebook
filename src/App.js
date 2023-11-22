@@ -6,11 +6,12 @@ import {
 import Home from "./components/Home";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
+import { NoteStates } from "./context/notes/NoteContext";
 
 function App() {
   return (
     <>
-      <div className="App">
+      <NoteStates>
         <Router>
           <Navbar />
           <Routes>
@@ -18,7 +19,7 @@ function App() {
             <Route path="/about" element={<About />} />
           </Routes>
         </Router>
-      </div>
+      </NoteStates>
     </>
   );
 }
