@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 
 export const NoteContext = createContext();
 
-export const NoteStates = (props) => {
+export const NoteContextProvider = (props) => {
     const [state, setState] = useState({
         name: "Faisal",
         class: "5b"

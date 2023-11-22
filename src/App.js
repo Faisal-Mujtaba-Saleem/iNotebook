@@ -6,20 +6,22 @@ import {
 import Home from "./components/Home";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
-import { NoteStates } from "./context/notes/NoteContext";
+import { NoteContextProvider } from "./context/notes/NoteContext";
 
 function App() {
   return (
     <>
-      <NoteStates>
+      <NoteContextProvider>
         <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
+          <Navbar appName="iNotebook" />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </div>
         </Router>
-      </NoteStates>
+      </NoteContextProvider>
     </>
   );
 }
