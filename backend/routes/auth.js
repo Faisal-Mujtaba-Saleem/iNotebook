@@ -110,6 +110,7 @@ router.post(
             res.status(200).json(authToken);
         } catch (error) {
             res.status(500).send({ error: "Internal Server Error" });
+            console.log(process.env.SECRET_KEY);
             console.error(error.message);
         }
     })

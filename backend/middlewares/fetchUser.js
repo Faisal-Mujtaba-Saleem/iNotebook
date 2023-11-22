@@ -14,6 +14,7 @@ const fetchUser = (req, res, next) => {
         next();
     } catch (err) {
         res.status(401).json({ error: "Access denied due to unauthorized token" });
+        console.log(process.env.SECRET_KEY);
         console.log(err.message);
     }
 }
