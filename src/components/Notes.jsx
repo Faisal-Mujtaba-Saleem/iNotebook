@@ -3,7 +3,7 @@ import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem'
 
 const Notes = () => {
-    const { notes, setNotes } = useContext(NoteContext);
+    const { notes } = useContext(NoteContext);
     return (
         <>
             <div className='container my-3 '>
@@ -11,10 +11,9 @@ const Notes = () => {
                 <div className="row">
                     {
                         notes.map((note, index) => {
+                            console.log(note._id);
                             return (
-                                <>
-                                    <NoteItem note={note} />
-                                </>
+                                <NoteItem key={note._id} note={note} />
                             )
                         })
                     }
