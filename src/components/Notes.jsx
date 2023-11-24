@@ -11,7 +11,6 @@ const Notes = () => {
                 <div className="row">
                     {
                         notes.map((note, index) => {
-                            console.log(note._id);
                             return (
                                 <NoteItem key={note._id} note={note} />
                             )
