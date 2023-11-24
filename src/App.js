@@ -15,7 +15,7 @@ function App() {
       <NoteContextProvider>
         <Router>
           <Navbar appName="iNotebook" />
-          <Alert message={`This is amazing react course!`} type={`primary`} />
+          {/* <Alert message={`This is amazing react course!`} type={`primary`} /> */}
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />

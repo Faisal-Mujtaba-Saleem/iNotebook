@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem'
 
 const Notes = () => {
-    const { notes } = useContext(NoteContext);
+    const { notes, fetchNotes } = useContext(NoteContext);
+    useEffect(() => {
+        fetchNotes();
+
+    }, [])
+
     return (
         <>
             <div className='container my-3 '>
