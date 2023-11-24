@@ -82,6 +82,7 @@ export const NoteContextProvider = (props) => {
 
     // Add Note
     const AddNote = (title, description, tag) => {
+        // TODO: API Call 
         const note = {
             "_id": "655e308c75h4ae482e7v8443c7",
             "user": "65537f11ece68dc8121416ad",
@@ -94,14 +95,19 @@ export const NoteContextProvider = (props) => {
         setNotes(notes.concat(note));
     }
 
-    // Edit Note 
-    const EditNote = (id) => {
-
-    }
-
     // Delete Note
     const DeleteNote = (id) => {
+        // TODO: API Call 
+        const updatedNotes = notes.filter((note, index) => {
+            return note._id !== id;
+        })
+        setNotes(updatedNotes);
+    }
 
+    // Edit Note 
+    const EditNote = (id, title, description, tag) => {
+        // TODO: API Call 
+        console.log(`Editing note`);
     }
 
     return (
