@@ -3,34 +3,35 @@ import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem'
 
 const Notes = () => {
-    const { notes, fetchNotes } = useContext(NoteContext);
+    const { notes, fetchNotes, editNote } = useContext(NoteContext);
     useEffect(() => {
         fetchNotes();
     }, [])
 
-    const modal = useRef(null);
+    const modalRef = useRef(null);
+    const closeRef = useRef(null);
 
-    const [editNote, setEditNote] = useState({ etitle: "", edescription: "", etag: "" });
+    const [eNote, setENote] = useState({ id: "", etitle: "", edescription: "", etag: "" });
 
     const showEditModal = (currentNote) => {
-        modal.current.click();
-        setEditNote({ etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
+        modalRef.current.click();
+        setENote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
     }
 
     const onChange = (e) => {
-        setEditNote({ ...editNote, [e.target.name]: e.target.value });
+        setENote({ ...eNote, [e.target.name]: e.target.value });
     }
 
     const handleUpdate = (e) => {
-        e.preventDefault();
-        console.log("Updating note... ", editNote);
+        editNote(eNote.id, eNote.etitle, eNote.edescription, eNote.etag);
+        closeRef.current.click();
     }
 
     return (
         <>
             <div className="container">
                 {/* Button trigger modal  */}
-                <button type="button" className="btn btn-primary d-none " ref={modal} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-primary d-none " ref={modalRef} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Launch demo modal
                 </button>
 
@@ -46,20 +47,20 @@ const Notes = () => {
                                 <form className='my-3'>
                                     <div className="mb-3">
                                         <label htmlFor="etitle" className="form-label" >Title </label>
-                                        <input type="text" className="form-control" id="etitle" name="etitle" value={editNote.etitle} onChange={onChange} />
+                                        <input type="text" className="form-control" id="etitle" name="etitle" value={eNote.etitle} onChange={onChange} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="edescription" className="form-label" >Description</label>
-                                        <input type="text" className="form-control" id="edescription" name="edescription" value={editNote.edescription} onChange={onChange} />
+                                        <input type="text" className="form-control" id="edescription" name="edescription" value={eNote.edescription} onChange={onChange} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="etag" className="form-label" >Tag</label>
-                                        <input type="text" className="form-control" id="etag" name="etag" value={editNote.etag} onChange={onChange} />
+                                        <input type="text" className="form-control" id="etag" name="etag" value={eNote.etag} onChange={onChange} />
                                     </div>
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button ref={closeRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" className="btn btn-primary" onClick={handleUpdate}>Update Note</button>
                             </div>
                         </div>
