@@ -28,13 +28,10 @@ const AddNote = () => {
                         <label htmlFor="description" className="form-label">Description</label>
                         <input type="text" className="form-control" id="description" name="description" onChange={onChange} />
                     </div>
-<<<<<<< HEAD
                     <div className="mb-3">
                         <label htmlFor="tag" className="form-label">Tag</label>
                         <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} />
                     </div>
-=======
->>>>>>> 836978167cd01b8fe5261ea94b9832ae783541e0
                     <button type="submit" className="btn btn-primary" onClick={handleSubmit}>+ Note</button>
                 </form>
             </div>

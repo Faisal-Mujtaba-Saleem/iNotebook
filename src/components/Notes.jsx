@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useContext, useEffect, useRef, useState } from 'react';
-=======
-import React, { useContext, useEffect } from 'react';
->>>>>>> 836978167cd01b8fe5261ea94b9832ae783541e0
 import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem'
 
@@ -10,7 +6,6 @@ const Notes = () => {
     const { notes, fetchNotes } = useContext(NoteContext);
     useEffect(() => {
         fetchNotes();
-<<<<<<< HEAD
     }, [])
 
     const modal = useRef(null);
@@ -31,11 +26,6 @@ const Notes = () => {
         console.log("Updating note... ", editNote);
     }
 
-=======
-
-    }, [])
-
->>>>>>> 836978167cd01b8fe5261ea94b9832ae783541e0
     return (
         <>
             <div className="container">
