@@ -27,7 +27,7 @@ router.post(
     // A set of validation middlewares that cath the req_object and extracts the request's body before reaching to the req_handler callback and applies the validation methods on the specifed req_parameter, If the validation return false then the validator will throw an errors array into the request object with an error object. Each validator pushes an error object into the errors array only for the req_parameter specified init.
     [
         body('title', "title should be a string of atleast 3 character").isLength({ min: 3 }),
-        body('description', "description should be of atleast 5 character").isLength({ min: 5 })
+        body('description', "description should be of atleast 10 character").isLength({ min: 10 })
     ],
     fetchUser,
     async (req, res) => {
@@ -58,7 +58,19 @@ router.post(
 router.put(
     '/updateNote/:id/',
     fetchUser,
+    // A set of validation middlewares that cath the req_object and extracts the request's body before reaching to the req_handler callback and applies the validation methods on the specifed req_parameter, If the validation return false then the validator will throw an errors array into the request object with an error object. Each validator pushes an error object into the errors array only for the req_parameter specified init.
+    [
+        body('title', "title should be a string of atleast 3 character").isLength({ min: 3 }),
+        body('description', "description should be of atleast 5 character").isLength({ min: 10 })
+    ],
     async (req, res) => {
+        // Finds the validation errors in this request and wraps them in an object with handy functions, if there are errors, return bad request and the errors.
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            // .array method extracts the errors array wraped iside an errors object by validationResult().
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const { title, description, tag } = req.body;
         try {
             // Creating a new note
