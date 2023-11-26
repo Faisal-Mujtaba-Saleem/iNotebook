@@ -61,7 +61,7 @@ const Notes = () => {
                             </div>
                             <div className="modal-footer">
                                 <button ref={closeRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" disabled={eNote.etitle.length <= 3 || eNote.edescription.length <= 10} onClick={handleUpdate}>Update Note</button>
+                                <button type="button" className="btn btn-primary" disabled={eNote.etitle.length <= 3 || eNote.edescription.length <= 10} onClick={handleUpdate}>Update Note</button>                                <button type="button" className="btn btn-primary" onClick={handleUpdate}>Update Note</button>
                             </div>
                         </div>
                     </div>

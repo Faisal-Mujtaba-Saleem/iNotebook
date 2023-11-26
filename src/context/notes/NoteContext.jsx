@@ -20,7 +20,6 @@ export const NoteContextProvider = (props) => {
         });
 
         const json = await response.json();
-
         setNotes(json);
     }
 
@@ -41,6 +40,7 @@ export const NoteContextProvider = (props) => {
         });
 
         const note = await response.json();
+        console.log(note);
 
         setNotes(notes.concat(note));
     }
@@ -90,6 +90,7 @@ export const NoteContextProvider = (props) => {
             const note = notes[index];
             if (note._id === id) {
                 // console.log(updatedNotes[index]);
+                console.log(updatedNotes[index]);
                 updatedNotes[index] = json;
                 break;
             }
