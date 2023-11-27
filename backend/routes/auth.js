@@ -22,8 +22,10 @@ router.post(
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             // .array method extracts the errors array wraped iside an errors object by validationResult().
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ success, errors: errors.array() });
         }
+
+        let success = true;
 
         try {
             const { name, email, password } = req.body;
@@ -47,10 +49,12 @@ router.post(
         } catch (error) {
             // Checking that if the err is related to the duplicate email.
             if (error.code === 11000) {
-                res.status(400).json({ error: 'Sorry a user with this email already exists' });
+                success = false;
+                res.status(400).json({ success, error: 'Sorry a user with this email already exists' });
                 console.error(error.message);
             } else {
-                res.status(500).send({ error: "Internal Server Error" });
+                success = false;
+                res.status(500).send({ success, error: "Internal Server Error" });
                 console.error(error.message);
             }
 
@@ -71,7 +75,8 @@ router.post(
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             // .array method extracts the errors array wraped iside an errors object by validationResult().
-            return res.status(400).json({ errors: errors.array() });
+            success = false;
+            return res.status(400).json({ success, errors: errors.array() });
         }
 
         try {
@@ -85,7 +90,8 @@ router.post(
 
             // Sending the status code 400 for the bad request with custom error in response if the user do not exists with the loggedin email
             if (!user) {
-                return res.status(400).json({ error: "Try to login using correct credentials" });
+                success = false;
+                return res.status(400).json({ success, error: "Try to login using correct credentials" });
             }
 
             /* Comparing loggedin password with the password hash stored in our db.
@@ -95,7 +101,8 @@ router.post(
 
             // Sending the status code 400 for the bad request with custom error in response if the password comparison fails.
             if (!comparePassword) {
-                return res.status(400).json({ error: "Try to login using correct credentials" });
+                success = false;
+                return res.status(400).json({ success, error: "Try to login using correct credentials" });
             }
 
             // Payload data
@@ -107,10 +114,11 @@ router.post(
             // It take payload as first arg. and the secret key as 2nd arg. for verification and a default header if not provided as a 3rd arg. contaning the signing algorithm being used and the token type then create a token with unique signature for every user/2nd party based on the payload, header if provided else default and a secret key the signature can't be complete if any one of them is missing we only share payload and the header with the user/2nd party and keep the secret key save to us.
             const authToken = jwt.sign(jwt_data, process.env.SECRET_KEY);
             console.log(authToken);
-            res.status(200).json(authToken);
+            success = true;
+            res.status(200).json({ success, authToken });
         } catch (error) {
-            res.status(500).send({ error: "Internal Server Error" });
-            console.log(process.env.SECRET_KEY);
+            success = false;
+            res.status(500).send({ success, error: "Internal Server Error" });
             console.error(error.message);
         }
     })
@@ -124,9 +132,11 @@ router.get(
         try {
             const userId = req.user.id;
             const user = await User.findById(userId).select('-password');
-            res.status(200).json(user)
+            success = true;
+            res.status(200).json({ success, user })
         } catch (error) {
-            res.status(500).send({ error: "Internal Server Error" });
+            success = false;
+            res.status(500).send({ success, error: "Internal Server Error" });
             console.error(error.message);
         }
     })
