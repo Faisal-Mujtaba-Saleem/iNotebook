@@ -33,9 +33,11 @@ const Login = () => {
         }
     }
 
+    const { email, password } = credentials;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const authToken = await fetchAuthToken(credentials.email, credentials.password);
+        const authToken = await fetchAuthToken(email, password);
         console.log(authToken);
         if (authToken) {
             localStorage.setItem('auth-token', authToken);
@@ -47,13 +49,13 @@ const Login = () => {
         <div className='container my-4'>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" name='email' aria-describedby="emailHelp" value={credentials.email} onChange={onChange} />
+                    <label htmlFor="email" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="email" name='email' aria-describedby="emailHelp" value={email} onChange={onChange} required />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="password" name='password' value={credentials.password} onChange={onChange} />
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input type="password" className="form-control" id="password" name='password' value={password} onChange={onChange} required />
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>

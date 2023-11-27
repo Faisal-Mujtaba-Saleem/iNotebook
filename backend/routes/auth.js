@@ -17,15 +17,16 @@ router.post(
         body('email', "Invalid email value").isEmail(),
         body('password', "password should be of atleast 5 character").isLength({ min: 5 })
     ],
+
     async (req, res) => {
+        let success = false;
+
         // Finds the validation errors in this request and wraps them in an object with handy functions, if there are errors, return bad request and the errors.
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             // .array method extracts the errors array wraped iside an errors object by validationResult().
             return res.status(400).json({ success, errors: errors.array() });
         }
-
-        let success = true;
 
         try {
             const { name, email, password } = req.body;
@@ -45,15 +46,15 @@ router.post(
             // It take payload as first arg. and the secret key as 2nd arg. for verification and a default header if not provided as a 3rd arg. contaning the signing algorithm being used and the token type then create a token with unique signature for every user/2nd party based on the payload, header if provided else default and a secret key the signature can't be complete if any one of them is missing we only share payload and the header with the user/2nd party and keep the secret key save to us.
             const authToken = jwt.sign(jwt_data, process.env.SECRET_KEY);
             console.log(authToken);
-            res.status(200).json(authToken);
+
+            success = true;
+            res.status(200).json({ success, authToken });
         } catch (error) {
             // Checking that if the err is related to the duplicate email.
             if (error.code === 11000) {
-                success = false;
                 res.status(400).json({ success, error: 'Sorry a user with this email already exists' });
                 console.error(error.message);
             } else {
-                success = false;
                 res.status(500).send({ success, error: "Internal Server Error" });
                 console.error(error.message);
             }
@@ -71,11 +72,12 @@ router.post(
         body('password', "password could not be blank").exists()
     ],
     async (req, res) => {
+        let success = false;
+
         // Finds the validation errors in this request and wraps them in an object with handy functions, if there are errors, return bad request and the errors.
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             // .array method extracts the errors array wraped iside an errors object by validationResult().
-            success = false;
             return res.status(400).json({ success, errors: errors.array() });
         }
 
@@ -90,7 +92,6 @@ router.post(
 
             // Sending the status code 400 for the bad request with custom error in response if the user do not exists with the loggedin email
             if (!user) {
-                success = false;
                 return res.status(400).json({ success, error: "Try to login using correct credentials" });
             }
 
@@ -101,7 +102,6 @@ router.post(
 
             // Sending the status code 400 for the bad request with custom error in response if the password comparison fails.
             if (!comparePassword) {
-                success = false;
                 return res.status(400).json({ success, error: "Try to login using correct credentials" });
             }
 
@@ -121,6 +121,7 @@ router.post(
             res.status(500).send({ success, error: "Internal Server Error" });
             console.error(error.message);
         }
+
     })
 
 // ROUTE.3: Get loggedin user details using: GET "/api/auth/getUser/", Login Required..
@@ -128,14 +129,13 @@ router.get(
     '/getUser/',
     fetchUser,
     async (req, res) => {
-
+        let success = false;
         try {
             const userId = req.user.id;
             const user = await User.findById(userId).select('-password');
             success = true;
             res.status(200).json({ success, user })
         } catch (error) {
-            success = false;
             res.status(500).send({ success, error: "Internal Server Error" });
             console.error(error.message);
         }
