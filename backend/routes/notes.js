@@ -81,7 +81,6 @@ router.put(
 
             // Find if note to be upadated exists
             let note = await Note.findById(req.params.id);
-            console.log(note);
 
             // If note does not exists the send response "Not found"
             if (!note) {
@@ -112,7 +111,6 @@ router.delete(
         try {
             // Find if note to be deleted exists
             let note = await Note.findById(req.params.id);
-            console.log(note);
 
             // If note does not exists the send response "Not found"
             if (!note) {

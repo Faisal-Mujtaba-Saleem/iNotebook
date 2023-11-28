@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AlertContext } from '../context/alerts/AlertContext';
 
 const Signup = () => {
+    const { showAlert } = useContext(AlertContext);
+
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
@@ -28,8 +31,8 @@ const Signup = () => {
             console.log(json);
             return json.authToken;
         } else {
+            showAlert('Invalid Credentials', 'danger');
             console.log(json);
-            alert("Invalid credentials");
         }
 
     }
@@ -43,6 +46,7 @@ const Signup = () => {
         if (authToken) {
             localStorage.setItem('auth-token', authToken);
             navigate('/');
+            showAlert('Account Created Successfully', 'success');
         }
     }
 

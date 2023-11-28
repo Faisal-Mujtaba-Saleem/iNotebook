@@ -45,8 +45,6 @@ router.post(
             }
             // It take payload as first arg. and the secret key as 2nd arg. for verification and a default header if not provided as a 3rd arg. contaning the signing algorithm being used and the token type then create a token with unique signature for every user/2nd party based on the payload, header if provided else default and a secret key the signature can't be complete if any one of them is missing we only share payload and the header with the user/2nd party and keep the secret key save to us.
             const authToken = jwt.sign(jwt_data, process.env.SECRET_KEY);
-            console.log(authToken);
-
             success = true;
             res.status(200).json({ success, authToken });
         } catch (error) {
@@ -84,11 +82,9 @@ router.post(
         try {
             // Extracting the email and the password from the request body.
             const { email, password } = req.body;
-            console.log(req.body);
 
             // Finding that if the user with this email exists in our db.
             const user = await User.findOne({ email });
-            console.log(email);
 
             // Sending the status code 400 for the bad request with custom error in response if the user do not exists with the loggedin email
             if (!user) {
@@ -113,7 +109,6 @@ router.post(
             }
             // It take payload as first arg. and the secret key as 2nd arg. for verification and a default header if not provided as a 3rd arg. contaning the signing algorithm being used and the token type then create a token with unique signature for every user/2nd party based on the payload, header if provided else default and a secret key the signature can't be complete if any one of them is missing we only share payload and the header with the user/2nd party and keep the secret key save to us.
             const authToken = jwt.sign(jwt_data, process.env.SECRET_KEY);
-            console.log(authToken);
             success = true;
             res.status(200).json({ success, authToken });
         } catch (error) {

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem'
+import { AlertContext } from '../context/alerts/AlertContext';
 
 const Notes = () => {
     const { notes, fetchNotes, editNote } = useContext(NoteContext);
+    const { showAlert } = useContext(AlertContext);
     useEffect(() => {
         fetchNotes();
     }, [])
@@ -25,6 +27,7 @@ const Notes = () => {
     const handleUpdate = (e) => {
         editNote(eNote.id, eNote.etitle, eNote.edescription, eNote.etag);
         closeRef.current.click();
+        showAlert('Successfully Updated Note', 'success')
     }
 
     return (
