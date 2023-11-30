@@ -45,31 +45,34 @@ const Signup = () => {
         console.log(authToken);
         if (authToken) {
             localStorage.setItem('auth-token', authToken);
-            navigate('/');
             showAlert('Account Created Successfully', 'success');
+            navigate('/');
         }
     }
 
     return (
-        <div>
-            <div className='container my-4'>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="name" className="form-label">Name</label>
-                        <input type="text" className="form-control" id="name" name='name' aria-describedby="emailHelp" value={name} onChange={onChange} required minLength={3} />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="email" name='email' aria-describedby="emailHelp" value={email} onChange={onChange} required />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" name='password' value={password} onChange={onChange} required minLength={5} />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </form>
+        <div className='container my-4'>
+            <div className="my-3">
+                <h3>
+                    Create an account to use iNotebook
+                </h3>
             </div>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name" name='name' aria-describedby="emailHelp" value={name} onChange={onChange} required minLength={3} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="email" name='email' aria-describedby="emailHelp" value={email} onChange={onChange} required />
+                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                    <input type="password" className="form-control" id="password" name='password' value={password} onChange={onChange} required minLength={5} />
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
         </div>
     )
 }

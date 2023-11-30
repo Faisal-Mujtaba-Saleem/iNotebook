@@ -7,6 +7,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({ email: "", password: "" });
+
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     }
@@ -43,13 +44,18 @@ const Login = () => {
         console.log(authToken);
         if (authToken) {
             localStorage.setItem('auth-token', authToken);
-            navigate('/');
             showAlert('Loggedin Successfully', 'success');
+            navigate('/');
         }
     }
 
     return (
         <div className='container my-4'>
+            <div className="my-3">
+                <h3>
+                    Login to continue with iNotebook
+                </h3>
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>

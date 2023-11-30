@@ -3,11 +3,18 @@ import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem'
 import { AlertContext } from '../context/alerts/AlertContext';
 
-const Notes = () => {
+const Notes = (props) => {
     const { notes, fetchNotes, editNote } = useContext(NoteContext);
     const { showAlert } = useContext(AlertContext);
+
     useEffect(() => {
-        fetchNotes();
+        if (localStorage.getItem('auth-token')) {
+            props.setLogoutMessage(false);
+            fetchNotes();
+        } else {
+            props.setLogoutMessage(true);
+        }
+
     }, [])
 
     const modalRef = useRef(null);
@@ -64,7 +71,7 @@ const Notes = () => {
                             </div>
                             <div className="modal-footer">
                                 <button ref={closeRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" disabled={eNote.etitle.length <= 3 || eNote.edescription.length <= 10} onClick={handleUpdate}>Update Note</button>
+                                <button type="button" className="btn btn-primary" disabled={eNote.etitle.length < 3 || eNote.edescription.length < 10} onClick={handleUpdate}>Update Note</button>
                             </div>
                         </div>
                     </div>

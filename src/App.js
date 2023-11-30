@@ -11,25 +11,28 @@ import Navbar from "./components/Navbar";
 import Alert from "./components/Alert";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import { SearchContextProvider } from "./context/search/SearchContext";
 
 function App() {
   return (
     <>
       <NoteContextProvider>
-        <Router>
-          <Navbar appName="iNotebook" />
-          <AlertContextProvider>
-            <Alert alert={alert} />
-            <div className="container">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-              </Routes>
-            </div>
-          </AlertContextProvider>
-        </Router>
+        <AlertContextProvider>
+          <SearchContextProvider>
+            <Router>
+              <Navbar appName="iNotebook" />
+              <Alert alert={alert} />
+              <div className="container">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                </Routes>
+              </div>
+            </Router>
+          </SearchContextProvider>
+        </AlertContextProvider>
       </NoteContextProvider>
     </>
   );
